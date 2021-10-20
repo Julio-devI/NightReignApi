@@ -40,4 +40,18 @@ class ProductController extends Controller
     {
         return Product::find($id);
     }
+
+    /** 
+     * Update the specified resource in storage
+     * 
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $product = Product::find($id);
+        $product->update($request->all());
+        return $product;
+    }
 }
