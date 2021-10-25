@@ -7,4 +7,4 @@
 <br>
 - php artisan serve e seu projeto ja estará rodando
 <br>
-<h2>Logo em seguida e so fazer seus testes e qualquer manda um pullrequest❤️
+<h2>Logo em seguida e so fazer seus testes e qualquer coisa manda um pullrequest❤️
