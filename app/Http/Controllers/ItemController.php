@@ -4,17 +4,28 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use OpenApi\Annotations as OA;
+
+/**
+ * @OA\Info(
+ *     title="API de Items",
+ *     version="1.0.0",
+ *     description="API de gerenciamento de items do Elden Ring NightReign"
+ * )
+ */
+
 
 class ItemController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        return Item::all();
+        $items = Item::all();
+
+        return response()->json([
+            'status' => 'success',
+            'data' => $items,
+        ], 200);
     }
 
     /**
