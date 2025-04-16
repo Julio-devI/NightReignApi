@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Mockery\Exception;
 use OpenApi\Annotations as OA;
 
 /**
@@ -13,7 +14,6 @@ use OpenApi\Annotations as OA;
  *     description="API de gerenciamento de items do Elden Ring NightReign"
  * )
  */
-
 
 class ItemController extends Controller
 {
@@ -36,12 +36,20 @@ class ItemController extends Controller
      */
     public function index()
     {
-        $items = Item::all();
+        try{
+            $items = Item::all();
 
-        return response()->json([
-            'status' => 'success',
-            'data' => $items,
-        ], 200);
+            return response()->json([
+                'status' => 'success',
+                'data' => $items,
+            ], 200);
+        } catch(Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'error' => $e->getMessage(),
+                'message' => 'Error on get items'
+            ], 500);
+        }
     }
 
     /**
