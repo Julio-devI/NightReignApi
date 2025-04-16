@@ -18,6 +18,22 @@ use OpenApi\Annotations as OA;
 class ItemController extends Controller
 {
 
+    /**
+     * @OA\Get(
+     *     path="/api/items",
+     *     tags={"Items"},
+     *     summary="Listar todos os items",
+     *     description="Retorna todos os items disponiveis",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Lista de items recuperada com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Item")),
+     *         )
+     *     )
+     * )
+     */
     public function index()
     {
         $items = Item::all();
