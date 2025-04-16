@@ -31,6 +31,15 @@ class ItemController extends Controller
      *             @OA\Property(property="status", type="string", example="success"),
      *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Item")),
      *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro interno no servidor",
+     *     @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="error", type="string"),
+     *             @OA\Property(property="message", type="string", example="Error on get items"),
+     *         )
      *     )
      * )
      */
