@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\WeaponCategory;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use OpenApi\Annotations as OA;
@@ -132,6 +133,90 @@ class WeaponCategoryController extends Controller
                 'status' => 'error',
                 'error' => $e->getMessage(),
                 'message' => 'Error on create weapon category'
+            ], 500);
+        }
+    }
+
+    /**
+     * @OA\Put(
+     *     path="/api/weapon-category/update/{id}",
+     *     tags={"weapon-category"},
+     *     summary="Atualizar uma categoria de arma existente",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID da categoria de arma",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/weapon-category")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="categoria de arma atualizada com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="weapon category has been updated successfully"),
+     *             @OA\Property(property="data", ref="#/components/schemas/weapon-category")
+     *         )
+     * ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="weapon category not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="error", type="string"),
+     *             @OA\Property(property="message", type="string", example="weapon category not found"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="errors", type="object"),
+     *             @OA\Property(property="message", type="string", example="Validation error"),
+     *         )
+     *     )
+     *  )
+     */
+    public function update(Request $request, $id)
+    {
+        try{
+            $item = WeaponCategory::findOrFail($id);
+
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'required|string',
+            ]);
+
+            $item->update($request->all());
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'weapon category has been updated successfully',
+                'data' => $item
+            ], 200);
+        } catch(ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'weapon category not found',
+                'error' => $e->getMessage()
+            ], 404);
+        } catch(ValidationException $e){
+            return response()->json([
+                'status' => 'error',
+                'error' => $e->errors(),
+                'message' => 'Validation error'
+            ], 422);
+        }
+        catch(\Exception $e){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error on update item',
+                'error' => $e->getMessage()
             ], 500);
         }
     }
