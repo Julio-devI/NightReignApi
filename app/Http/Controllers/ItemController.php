@@ -121,6 +121,11 @@ class ItemController extends Controller
      *     "message": "Item already exists",
      *     "error": "duplicate entry for key `name`"
      * }
+     * @response 500 scenario="Internal server error" {
+     *      "status": "error",
+     *      "message": "verify if the shipment is correct",
+     *      "error": "Internal server error"
+     *  }
      */
     public function store(Request $request)
     {
@@ -331,45 +336,29 @@ class ItemController extends Controller
     }
 
     /**
-     * @OA\Delete(
-     *     path="/api/item/delete/{id}",
-     *     tags={"Items"},
-     *     summary="Deletar um item existente",
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID do item",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Item deletado com sucesso",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="success"),
-     *             @OA\Property(property="message", type="string", example="Item has been deleted successfully"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Item not found",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="error", type="string"),
-     *             @OA\Property(property="message", type="string", example="Item not found"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Erro interno no servidor",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="error", type="string"),
-     *             @OA\Property(property="message", type="string", example="Error on delete item"),
-     *         )
-     *     )
-     * )
+     * Delete an existing item
      *
+     * @group Items
+     * @authenticated
+     *
+     * @urlParam id required The ID of the item. Example: 1
+     *
+     * @response 200 scenario="Success" {
+     *     "status": "success",
+     *     "message": "Item has been deleted successfully"
+     * }
+     *
+     * @response 404 scenario="Not Found" {
+     *     "status": "error",
+     *     "message": "Item not found",
+     *     "error": "No query results for model [App\\Models\\Item] 1"
+     * }
+     *
+     * @response 500 scenario="Internal Server Error" {
+     *     "status": "error",
+     *     "message": "Error on delete item",
+     *     "error": "Internal server error"
+     * }
      */
     public function destroy($id)
     {
