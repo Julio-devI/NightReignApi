@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @OA\Schema(
- *     schema="weapon category",
+ *     schema="weapon-category",
  *     required={"name"},
  *     @OA\Property(property="name", type="string"),
  *     @OA\Property(property="description", type="string"),
