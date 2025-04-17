@@ -5,13 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @OA\Schema(
- *     schema="weapon-category",
- *     required={"name"},
- *     required={"description"},
- *     @OA\Property(property="name", type="string"),
- *     @OA\Property(property="description", type="string"),
- * )
+ * @apiResource App\Models\WeaponCategory
+ * @apiResourceModel App\Models\WeaponCategory
+ * @apiProperty string $name required
+ * @apiProperty string $description required
  */
 class WeaponCategory extends Model
 {
