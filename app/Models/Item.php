@@ -6,30 +6,28 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * @OA\Schema(
- *     schema="Item",
- *     required={"name"},
- *     @OA\Property(property="name", type="string"),
- *     @OA\Property(property="description", type="string"),
- *     @OA\Property(property="notes", type="string"),
- *     @OA\Property(property="Scaling", type="string"),
- *     @OA\Property(property="physical_damage", type="integer"),
- *     @OA\Property(property="magical_damage", type="integer"),
- *     @OA\Property(property="fire_damage", type="integer"),
- *     @OA\Property(property="lightning_damage", type="integer"),
- *     @OA\Property(property="holy_damage", type="integer"),
- *     @OA\Property(property="critical_chance", type="integer"),
- *     @OA\Property(property="level_required", type="integer"),
- *     @OA\Property(property="physical_defense", type="integer"),
- *     @OA\Property(property="magical_defense", type="integer"),
- *     @OA\Property(property="fire_defense", type="integer"),
- *     @OA\Property(property="lightning_defense", type="integer"),
- *     @OA\Property(property="holy_defense", type="integer"),
- *     @OA\Property(property="boost", type="integer"),
- *     @OA\Property(property="created_at", type="string", format="date-time"),
- *     @OA\Property(property="updated_at", type="string", format="date-time"),
- *     @OA\Property(property="deleted_at", type="string", format="date-time", nullable=true)
- * )
+ * @apiResource App\Models\Item
+ * @apiResourceModel App\Models\Item
+ * @apiProperty string $name required
+ * @apiProperty string $description
+ * @apiProperty string $notes
+ * @apiProperty string $scaling
+ * @apiProperty integer $physical_damage
+ * @apiProperty integer $magical_damage
+ * @apiProperty integer $fire_damage
+ * @apiProperty integer $lightning_damage
+ * @apiProperty integer $holy_damage
+ * @apiProperty integer $critical_chance
+ * @apiProperty integer $level_required
+ * @apiProperty integer $physical_defense
+ * @apiProperty integer $magical_defense
+ * @apiProperty integer $fire_defense
+ * @apiProperty integer $lightning_defense
+ * @apiProperty integer $holy_defense
+ * @apiProperty integer $boost
+ * @apiProperty string $created_at datetime
+ * @apiProperty string $updated_at datetime
+ * @apiProperty string|null $deleted_at datetime
  */
 
 
