@@ -61,43 +61,38 @@ class WeaponCategoryController extends Controller
     }
 
     /**
-     * @OA\Post(
-     *     path="/api/weapon-category/add",
-     *     tags={"weapon-category"},
-     *     summary="Criar nova categoria de arma",
-     *     description="Cria uma nova categoria de arma caso esteja autenticado"
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/weapon-category")
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="categoria de arma criada com sucesso",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="success"),
-     *             @OA\Property(property="message", type="string", example="Weapon category has been created successfully"),
-     *             @OA\Property(property="data", ref="#/components/schemas/weapon-category"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation Error",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="errors", type="object"),
-     *             @OA\Property(property="message", type="string", example="Validation error"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=409,
-     *         description="Conflict",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="error", type="string"),
-     *             @OA\Property(property="message", type="string", example="weapon category already exists"),
-     *         )
-     *     )
-     * )
+     * @group Weapon Categories
+     *
+     * Criar nova categoria de arma.
+     *
+     * Cria uma nova categoria de arma caso o usuário esteja autenticado.
+     *
+     * @bodyParam name string required Nome da categoria. Ex: Rifles
+     * @bodyParam description string Descrição da categoria. Ex: Armas de longo alcance
+     *
+     * @response 201 {
+     *   "status": "success",
+     *   "message": "Weapon category has been created successfully",
+     *   "data": {
+     *     "id": 10,
+     *     "name": "Rifles",
+     *     "description": "Armas de longo alcance"
+     *   }
+     * }
+     *
+     * @response 422 {
+     *   "status": "error",
+     *   "message": "Validation error",
+     *   "errors": {
+     *     "name": ["O campo name é obrigatório."]
+     *   }
+     * }
+     *
+     * @response 409 {
+     *   "status": "error",
+     *   "error": "ConflictException",
+     *   "message": "weapon category already exists"
+     * }
      */
     public function store(Request $request)
     {
