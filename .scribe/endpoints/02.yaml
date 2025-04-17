@@ -1,0 +1,68 @@
+name: 'Weapon Categories'
+description: ''
+endpoints:
+  -
+    httpMethods:
+      - GET
+    uri: api/api/weapon-categories
+    metadata:
+      groupName: 'Weapon Categories'
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: |-
+        Listar todas as categorias de armas.
+
+        Retorna todas as categorias de armas disponíveis.
+      description: ''
+      authenticated: false
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+            "status": "success",
+            "data": [
+              {
+                "id": 1,
+                "name": "Rifles",
+                "description": "Armas de longo alcance"
+              },
+              {
+                "id": 2,
+                "name": "Pistolas",
+                "description": "Armas curtas de fácil manuseio"
+              }
+            ]
+          }
+        headers: []
+        description: ''
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+            "status": "error",
+            "error": "Exception",
+            "message": "Error on get weapon categories"
+          }
+        headers: []
+        description: ''
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
