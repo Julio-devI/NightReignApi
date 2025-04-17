@@ -55,3 +55,660 @@ endpoints:
     method: null
     route: null
     custom: []
+  -
+    httpMethods:
+      - POST
+    uri: api/item/add
+    metadata:
+      groupName: Items
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Create new item'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters: []
+    cleanUrlParameters: []
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'The name of the item.'
+        required: true
+        example: 'Sword of Truth'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: 'The item description.'
+        required: true
+        example: 'A powerful magical sword'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      notes:
+        name: notes
+        description: 'Additional notes.'
+        required: true
+        example: 'Found in ancient ruins'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      scaling:
+        name: scaling
+        description: 'The scaling grade (S,A,B,C,D,E).'
+        required: true
+        example: A
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      physical_damage:
+        name: physical_damage
+        description: 'Physical damage (0-100).'
+        required: true
+        example: 75
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      magic_damage:
+        name: magic_damage
+        description: 'Magic damage (0-100).'
+        required: true
+        example: 50
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      fire_damage:
+        name: fire_damage
+        description: 'Fire damage (0-100).'
+        required: true
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      lightning_damage:
+        name: lightning_damage
+        description: 'Lightning damage (0-100).'
+        required: true
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      holy_damage:
+        name: holy_damage
+        description: 'Holy damage (0-100).'
+        required: true
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      critical_chance:
+        name: critical_chance
+        description: 'Critical hit chance (0-100).'
+        required: true
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      level_required:
+        name: level_required
+        description: 'Minimum level required (1+).'
+        required: true
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      physical_defense:
+        name: physical_defense
+        description: 'Physical defense (0-100).'
+        required: true
+        example: 50
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      magic_defense:
+        name: magic_defense
+        description: 'Magic defense (0-100).'
+        required: true
+        example: 40
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      fire_defense:
+        name: fire_defense
+        description: 'Fire defense (0-100).'
+        required: true
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      lightning_defense:
+        name: lightning_defense
+        description: 'Lightning defense (0-100).'
+        required: true
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      holy_defense:
+        name: holy_defense
+        description: 'Holy defense (0-100).'
+        required: true
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      boost:
+        name: boost
+        description: 'Stat boost value (0-100).'
+        required: true
+        example: 20
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: 'Sword of Truth'
+      description: 'A powerful magical sword'
+      notes: 'Found in ancient ruins'
+      scaling: A
+      physical_damage: 75
+      magic_damage: 50
+      fire_damage: 25
+      lightning_damage: 25
+      holy_damage: 25
+      critical_chance: 15
+      level_required: 30
+      physical_defense: 50
+      magic_defense: 40
+      fire_defense: 30
+      lightning_defense: 30
+      holy_defense: 30
+      boost: 20
+    fileParameters: []
+    responses:
+      -
+        status: 201
+        content: |-
+          {
+              "status": "success",
+              "message": "Item has been created successfully",
+              "data": {
+                  "name": "Sword of Truth",
+                  "description": "A powerful magical sword",
+                  "notes": "Found in ancient ruins",
+                  "scaling": "A",
+                  "physical_damage": 75,
+                  "magic_damage": 50,
+                  "fire_damage": 25,
+                  "lightning_damage": 25,
+                  "holy_damage": 25,
+                  "critical_chance": 15,
+                  "level_required": 30,
+                  "physical_defense": 50,
+                  "magic_defense": 40,
+                  "fire_defense": 30,
+                  "lightning_defense": 30,
+                  "holy_defense": 30,
+                  "boost": 20,
+                  "updated_at": "2024-01-20T15:33:12.000000Z",
+                  "created_at": "2024-01-20T15:33:12.000000Z",
+                  "id": 1
+              }
+          }
+        headers: []
+        description: Success
+        custom: []
+      -
+        status: 409
+        content: |-
+          {
+              "status": "error",
+              "message": "Item already exists",
+              "error": "duplicate entry for key `name`"
+          }
+        headers: []
+        description: Conflict
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+              "status": "error",
+              "errors": {
+                  "name": ["The name field is required"],
+                  "description": ["The description field is required"]
+              },
+              "message": "Validation error"
+          }
+        headers: []
+        description: 'Validation Error'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+               "status": "error",
+               "message": "verify if the shipment is correct",
+               "error": "Internal server error"
+           }
+        headers: []
+        description: 'Internal server error'
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - PUT
+    uri: 'api/items/update/{id}'
+    metadata:
+      groupName: Items
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Update item'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the item.'
+        required: true
+        example: '1'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: '1'
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters:
+      name:
+        name: name
+        description: 'The name of the item.'
+        required: true
+        example: 'Sword of Truth'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      description:
+        name: description
+        description: 'The description of the item.'
+        required: true
+        example: 'A powerful magical sword'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      notes:
+        name: notes
+        description: 'Additional notes about the item.'
+        required: true
+        example: 'Found in ancient ruins'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      scaling:
+        name: scaling
+        description: 'The scaling grade (S,A,B,C,D,E).'
+        required: true
+        example: A
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      physical_damage:
+        name: physical_damage
+        description: 'Physical damage value (min: 0).'
+        required: true
+        example: 75
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      magic_damage:
+        name: magic_damage
+        description: 'Magic damage value (min: 0).'
+        required: true
+        example: 50
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      fire_damage:
+        name: fire_damage
+        description: 'Fire damage value (min: 0).'
+        required: true
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      lightning_damage:
+        name: lightning_damage
+        description: 'Lightning damage value (min: 0).'
+        required: true
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      holy_damage:
+        name: holy_damage
+        description: 'Holy damage value (min: 0).'
+        required: true
+        example: 25
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      critical_chance:
+        name: critical_chance
+        description: 'Critical hit chance (min: 0).'
+        required: true
+        example: 15
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      level_required:
+        name: level_required
+        description: 'Required level (min: 1).'
+        required: true
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      physical_defense:
+        name: physical_defense
+        description: 'Physical defense (0-100).'
+        required: true
+        example: 50
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      magic_defense:
+        name: magic_defense
+        description: 'Magic defense (0-100).'
+        required: true
+        example: 40
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      fire_defense:
+        name: fire_defense
+        description: 'Fire defense (0-100).'
+        required: true
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      lightning_defense:
+        name: lightning_defense
+        description: 'Lightning defense (0-100).'
+        required: true
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      holy_defense:
+        name: holy_defense
+        description: 'Holy defense (0-100).'
+        required: true
+        example: 30
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+      boost:
+        name: boost
+        description: 'Stat boost (0-100).'
+        required: true
+        example: 20
+        type: integer
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanBodyParameters:
+      name: 'Sword of Truth'
+      description: 'A powerful magical sword'
+      notes: 'Found in ancient ruins'
+      scaling: A
+      physical_damage: 75
+      magic_damage: 50
+      fire_damage: 25
+      lightning_damage: 25
+      holy_damage: 25
+      critical_chance: 15
+      level_required: 30
+      physical_defense: 50
+      magic_defense: 40
+      fire_defense: 30
+      lightning_defense: 30
+      holy_defense: 30
+      boost: 20
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+              "status": "success",
+              "message": "item has been updated successfully",
+              "data": {
+                  "name": "Sword of Truth",
+                  "description": "A powerful magical sword",
+                  "notes": "Found in ancient ruins",
+                  "scaling": "A",
+                  "physical_damage": 75,
+                  "magic_damage": 50,
+                  "fire_damage": 25,
+                  "lightning_damage": 25,
+                  "holy_damage": 25,
+                  "critical_chance": 15,
+                  "level_required": 30,
+                  "physical_defense": 50,
+                  "magic_defense": 40,
+                  "fire_defense": 30,
+                  "lightning_defense": 30,
+                  "holy_defense": 30,
+                  "boost": 20,
+                  "updated_at": "2024-01-20T15:33:12.000000Z",
+                  "created_at": "2024-01-20T15:33:12.000000Z",
+                  "id": 1
+              }
+          }
+        headers: []
+        description: Success
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+              "status": "error",
+              "message": "Item not found",
+              "error": "No query results for model [App\\Models\\Item] 1"
+          }
+        headers: []
+        description: 'Not Found'
+        custom: []
+      -
+        status: 422
+        content: |-
+          {
+              "status": "error",
+              "errors": {
+                  "name": ["The name field is required"],
+                  "description": ["The description field is required"]
+              },
+              "message": "Validation error"
+          }
+        headers: []
+        description: 'Validation Error'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+               "status": "error",
+               "errors": {
+                   "name": ["Error on update item"],
+                   "description": ["check if the shipment is correct"]
+               },
+               "message": "There was an error updating the item"
+           }
+        headers: []
+        description: 'Error on update item'
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []
+  -
+    httpMethods:
+      - DELETE
+    uri: 'api/item/delete/{id}'
+    metadata:
+      groupName: Items
+      groupDescription: ''
+      subgroup: ''
+      subgroupDescription: ''
+      title: 'Delete an existing item'
+      description: ''
+      authenticated: true
+      custom: []
+    headers:
+      Content-Type: application/json
+      Accept: application/json
+    urlParameters:
+      id:
+        name: id
+        description: 'The ID of the item.'
+        required: true
+        example: '1'
+        type: string
+        enumValues: []
+        exampleWasSpecified: true
+        nullable: false
+        custom: []
+    cleanUrlParameters:
+      id: '1'
+    queryParameters: []
+    cleanQueryParameters: []
+    bodyParameters: []
+    cleanBodyParameters: []
+    fileParameters: []
+    responses:
+      -
+        status: 200
+        content: |-
+          {
+              "status": "success",
+              "message": "Item has been deleted successfully"
+          }
+        headers: []
+        description: Success
+        custom: []
+      -
+        status: 404
+        content: |-
+          {
+              "status": "error",
+              "message": "Item not found",
+              "error": "No query results for model [App\\Models\\Item] 1"
+          }
+        headers: []
+        description: 'Not Found'
+        custom: []
+      -
+        status: 500
+        content: |-
+          {
+              "status": "error",
+              "message": "Error on delete item",
+              "error": "Internal server error"
+          }
+        headers: []
+        description: 'Internal Server Error'
+        custom: []
+    responseFields: []
+    auth: []
+    controller: null
+    method: null
+    route: null
+    custom: []

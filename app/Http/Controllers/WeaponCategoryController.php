@@ -222,45 +222,27 @@ class WeaponCategoryController extends Controller
     }
 
     /**
-     * @OA\Delete(
-     *     path="/api/weapon-category/delete/{id}",
-     *     tags={"weapon-category"},
-     *     summary="Deletar uma categoria de arma existente",
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID da categoria de arma a ser deletada",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="categoria de arma deletada com sucesso",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="success"),
-     *             @OA\Property(property="message", type="string", example="weapon category has been deleted successfully"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="weapon category not found",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="error", type="string"),
-     *             @OA\Property(property="message", type="string", example="weapon category not found"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Erro interno no servidor",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="error", type="string"),
-     *             @OA\Property(property="message", type="string", example="Error on delete weapon category"),
-     *         )
-     *     )
-     * )
+     * Delete an existing weapon category
      *
+     * @group Weapon Categories
+     * @urlParam id integer required The ID of the weapon category to delete Example: 1
+     *
+     * @response 200 {
+     *   "status": "success",
+     *   "message": "weapon category has been deleted successfully"
+     * }
+     *
+     * @response 404 {
+     *   "status": "error",
+     *   "error": "No query results for model [App\\Models\\WeaponCategory] 1",
+     *   "message": "weapon category not found"
+     * }
+     *
+     * @response 500 {
+     *   "status": "error",
+     *   "error": "Server error message",
+     *   "message": "Error on delete weapon category"
+     * }
      */
     public function destroy($id)
     {
