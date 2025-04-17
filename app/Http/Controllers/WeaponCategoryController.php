@@ -220,4 +220,72 @@ class WeaponCategoryController extends Controller
             ], 500);
         }
     }
+
+    /**
+     * @OA\Delete(
+     *     path="/api/weapon-category/delete/{id}",
+     *     tags={"weapon-category"},
+     *     summary="Deletar uma categoria de arma existente",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID da categoria de arma a ser deletada",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="categoria de arma deletada com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="weapon category has been deleted successfully"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="weapon category not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="error", type="string"),
+     *             @OA\Property(property="message", type="string", example="weapon category not found"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro interno no servidor",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="error", type="string"),
+     *             @OA\Property(property="message", type="string", example="Error on delete weapon category"),
+     *         )
+     *     )
+     * )
+     *
+     */
+    public function destroy($id)
+    {
+        try{
+            $item = WeaponCategory::findOrFail($id);
+
+            $item->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'weapon category has been deleted successfully',
+            ], 200);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'weapon category not found',
+                'error' => $e->getMessage()
+            ], 404);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error on delete weapon category',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 }
