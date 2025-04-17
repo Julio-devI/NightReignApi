@@ -6,15 +6,7 @@ use App\Models\WeaponCategory;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
-use OpenApi\Annotations as OA;
 
-/**
- * @OA\Info(
- *     title="API de Items",
- *     version="1.0.0",
- *     description="API de gerenciamento de items do Elden Ring NightReign"
- * )
- */
 class WeaponCategoryController extends Controller
 {
     /**
