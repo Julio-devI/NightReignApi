@@ -200,49 +200,81 @@ class ItemController extends Controller
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/item/update/{id}",
-     *     tags={"Items"},
-     *     summary="Atualizar um item existente",
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID do item",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Item")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Item atualizado com sucesso",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="success"),
-     *             @OA\Property(property="message", type="string", example="item has been updated successfully"),
-     *             @OA\Property(property="data", ref="#/components/schemas/Item")
-     *         )
-     * ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="Item not found",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="error", type="string"),
-     *             @OA\Property(property="message", type="string", example="Item not found"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation Error",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="errors", type="object"),
-     *             @OA\Property(property="message", type="string", example="Validation error"),
-     *         )
-     *     )
-     *  )
+     * Update item
+     *
+     * @group Items
+     * @authenticated
+     *
+     * @urlParam id required The ID of the item. Example: 1
+     *
+     * @bodyParam name string required The name of the item. Example: Sword of Truth
+     * @bodyParam description string required The description of the item. Example: A powerful magical sword
+     * @bodyParam notes string required Additional notes about the item. Example: Found in ancient ruins
+     * @bodyParam scaling string required The scaling grade (S,A,B,C,D,E). Example: A
+     * @bodyParam physical_damage integer required Physical damage value (min: 0). Example: 75
+     * @bodyParam magic_damage integer required Magic damage value (min: 0). Example: 50
+     * @bodyParam fire_damage integer required Fire damage value (min: 0). Example: 25
+     * @bodyParam lightning_damage integer required Lightning damage value (min: 0). Example: 25
+     * @bodyParam holy_damage integer required Holy damage value (min: 0). Example: 25
+     * @bodyParam critical_chance integer required Critical hit chance (min: 0). Example: 15
+     * @bodyParam level_required integer required Required level (min: 1). Example: 30
+     * @bodyParam physical_defense integer required Physical defense (0-100). Example: 50
+     * @bodyParam magic_defense integer required Magic defense (0-100). Example: 40
+     * @bodyParam fire_defense integer required Fire defense (0-100). Example: 30
+     * @bodyParam lightning_defense integer required Lightning defense (0-100). Example: 30
+     * @bodyParam holy_defense integer required Holy defense (0-100). Example: 30
+     * @bodyParam boost integer required Stat boost (0-100). Example: 20
+     *
+     * @response 200 scenario="Success" {
+     *     "status": "success",
+     *     "message": "item has been updated successfully",
+     *     "data": {
+     *         "name": "Sword of Truth",
+     *         "description": "A powerful magical sword",
+     *         "notes": "Found in ancient ruins",
+     *         "scaling": "A",
+     *         "physical_damage": 75,
+     *         "magic_damage": 50,
+     *         "fire_damage": 25,
+     *         "lightning_damage": 25,
+     *         "holy_damage": 25,
+     *         "critical_chance": 15,
+     *         "level_required": 30,
+     *         "physical_defense": 50,
+     *         "magic_defense": 40,
+     *         "fire_defense": 30,
+     *         "lightning_defense": 30,
+     *         "holy_defense": 30,
+     *         "boost": 20,
+     *         "updated_at": "2024-01-20T15:33:12.000000Z",
+     *         "created_at": "2024-01-20T15:33:12.000000Z",
+     *         "id": 1
+     *     }
+     * }
+     *
+     * @response 404 scenario="Not Found" {
+     *     "status": "error",
+     *     "message": "Item not found",
+     *     "error": "No query results for model [App\\Models\\Item] 1"
+     * }
+     *
+     * @response 422 scenario="Validation Error" {
+     *     "status": "error",
+     *     "errors": {
+     *         "name": ["The name field is required"],
+     *         "description": ["The description field is required"]
+     *     },
+     *     "message": "Validation error"
+     * }
+     *
+     * @response 500 scenario="Error on update item" {
+     *      "status": "error",
+     *      "errors": {
+     *          "name": ["Error on update item"],
+     *          "description": ["check if the shipment is correct"]
+     *      },
+     *      "message": "There was an error updating the item"
+     *  }
      */
     public function update(Request $request, $id)
     {
