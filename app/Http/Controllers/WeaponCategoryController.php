@@ -18,29 +18,33 @@ use OpenApi\Annotations as OA;
 class WeaponCategoryController extends Controller
 {
     /**
-     * @OA\Get(
-     *     path="/api/weapon-categories",
-     *     tags={"weapon-category"},
-     *     summary="Listar todas as categorias de armas",
-     *     description="Retorna todas as categorias de armas disponiveis",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Lista de categorias de armas recuperada com sucesso",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="success"),
-     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/weapon-category"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Erro interno no servidor",
-     *     @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="error", type="string"),
-     *             @OA\Property(property="message", type="string", example="Error on get weapon categories"),
-     *         )
-     *     )
-     * )
+     * @group Weapon Categories
+     *
+     * Listar todas as categorias de armas.
+     *
+     * Retorna todas as categorias de armas disponíveis.
+     *
+     * @response 200 {
+     *   "status": "success",
+     *   "data": [
+     *     {
+     *       "id": 1,
+     *       "name": "Rifles",
+     *       "description": "Armas de longo alcance"
+     *     },
+     *     {
+     *       "id": 2,
+     *       "name": "Pistolas",
+     *       "description": "Armas curtas de fácil manuseio"
+     *     }
+     *   ]
+     * }
+     *
+     * @response 500 {
+     *   "status": "error",
+     *   "error": "Exception",
+     *   "message": "Error on get weapon categories"
+     * }
      */
     public function index()
     {
