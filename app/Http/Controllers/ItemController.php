@@ -283,13 +283,70 @@ class ItemController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     *     path="/api/item/delete/{id}",
+     *     tags={"Items"},
+     *     summary="Deletar um item existente",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID do item",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Item deletado com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="Item has been deleted successfully"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Item not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="error", type="string"),
+     *             @OA\Property(property="message", type="string", example="Item not found"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=500,
+     *         description="Erro interno no servidor",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="error", type="string"),
+     *             @OA\Property(property="message", type="string", example="Error on delete item"),
+     *         )
+     *     )
+     * )
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        return Item::destroy($id);
+        try{
+            $item = Item::findOrFail($id);
+
+            $item->delete();
+
+            return response()->json([
+               'status' => 'success',
+               'message' => 'Item has been deleted successfully',
+            ], 200);
+
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Item not found',
+                'error' => $e->getMessage()
+            ], 404);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error on delete item',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 }
