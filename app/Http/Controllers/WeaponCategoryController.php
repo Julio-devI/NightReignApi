@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\WeaponCategory;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
+use OpenApi\Annotations as OA;
 
 /**
  * @OA\Info(
@@ -53,6 +55,83 @@ class WeaponCategoryController extends Controller
                 'status' => 'error',
                 'error' => $e->getMessage(),
                 'message' => 'Error on get weapon categories'
+            ], 500);
+        }
+    }
+
+    /**
+     * @OA\Post(
+     *     path="/api/weapon-category/add",
+     *     tags={"weapon-category"},
+     *     summary="Criar nova categoria de arma",
+     *     description="Cria uma nova categoria de arma caso esteja autenticado"
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/weapon-category")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="categoria de arma criada com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="Weapon category has been created successfully"),
+     *             @OA\Property(property="data", ref="#/components/schemas/weapon-category"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="errors", type="object"),
+     *             @OA\Property(property="message", type="string", example="Validation error"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=409,
+     *         description="Conflict",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="error", type="string"),
+     *             @OA\Property(property="message", type="string", example="weapon category already exists"),
+     *         )
+     *     )
+     * )
+     */
+    public function store(Request $request)
+    {
+        try{
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'required|string',
+            ]);
+
+            if (WeaponCategory::where('name', $request['name'])->exists()){
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'weapon category already exists',
+                    'error' => 'duplicate entry for key `name`',
+                ], 409);
+            }
+
+            $item = WeaponCategory::create($request->all());
+
+            return response()->json([
+               'status' => 'success',
+               'message' => 'weapon category has been created successfully',
+               'data' => $item,
+            ]);
+        } catch (ValidationException $e) {
+            return response()->json([
+               'status' => 'error',
+               'error' => $e->errors(),
+               'message' => 'Validation error'
+            ], 422);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'error' => $e->getMessage(),
+                'message' => 'Error on create weapon category'
             ], 500);
         }
     }
