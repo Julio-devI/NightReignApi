@@ -138,49 +138,40 @@ class WeaponCategoryController extends Controller
     }
 
     /**
-     * @OA\Put(
-     *     path="/api/weapon-category/update/{id}",
-     *     tags={"weapon-category"},
-     *     summary="Atualizar uma categoria de arma existente",
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="ID da categoria de arma",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/weapon-category")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="categoria de arma atualizada com sucesso",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="success"),
-     *             @OA\Property(property="message", type="string", example="weapon category has been updated successfully"),
-     *             @OA\Property(property="data", ref="#/components/schemas/weapon-category")
-     *         )
-     * ),
-     *     @OA\Response(
-     *         response=404,
-     *         description="weapon category not found",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="error", type="string"),
-     *             @OA\Property(property="message", type="string", example="weapon category not found"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation Error",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="errors", type="object"),
-     *             @OA\Property(property="message", type="string", example="Validation error"),
-     *         )
-     *     )
-     *  )
+     * @group Weapon Categories
+     *
+     * Atualizar uma categoria de arma existente.
+     *
+     * Atualiza os dados de uma categoria de arma pelo seu ID.
+     *
+     * @urlParam id integer required ID da categoria de arma. Ex: 1
+     *
+     * @bodyParam name string required Nome da categoria. Ex: Pistolas
+     * @bodyParam description string Descrição da categoria. Ex: Armas curtas de fácil manuseio
+     *
+     * @response 200 {
+     *   "status": "success",
+     *   "message": "weapon category has been updated successfully",
+     *   "data": {
+     *     "id": 1,
+     *     "name": "Pistolas",
+     *     "description": "Armas curtas de fácil manuseio"
+     *   }
+     * }
+     *
+     * @response 404 {
+     *   "status": "error",
+     *   "error": "NotFoundException",
+     *   "message": "weapon category not found"
+     * }
+     *
+     * @response 422 {
+     *   "status": "error",
+     *   "message": "Validation error",
+     *   "errors": {
+     *     "name": ["O campo name é obrigatório."]
+     *   }
+     * }
      */
     public function update(Request $request, $id)
     {
@@ -225,6 +216,9 @@ class WeaponCategoryController extends Controller
      * Delete an existing weapon category
      *
      * @group Weapon Categories
+     *
+     * Cria uma nova categoria de armas
+     *
      * @urlParam id integer required The ID of the weapon category to delete Example: 1
      *
      * @response 200 {
