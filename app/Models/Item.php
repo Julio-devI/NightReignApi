@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
  * @OA\Schema(
  *     schema="Item",
  *     required={"name"},
- *     @OA\Property(property="id", type="integer", format="int64"),
  *     @OA\Property(property="name", type="string"),
  *     @OA\Property(property="description", type="string"),
  *     @OA\Property(property="notes", type="string"),

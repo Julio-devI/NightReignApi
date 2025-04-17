@@ -73,6 +73,7 @@ class ItemController extends Controller
      *     path="/api/item/add",
      *     tags={"Items"},
      *     summary="Criar novo item",
+     *     description="Cria um novo item caso esteja autenticado"
      *     @OA\RequestBody(
      *         required=true,
      *         @OA\JsonContent(ref="#/components/schemas/Item")
