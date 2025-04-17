@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Item;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Mockery\Exception;
@@ -183,17 +184,102 @@ class ItemController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @OA\Put(
+     *     path="/api/item/update/{id}",
+     *     tags={"Items"},
+     *     summary="Atualizar um item existente",
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="ID do item",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Item")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Item atualizado com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="item has been updated successfully"),
+     *             @OA\Property(property="data", ref="#/components/schemas/Item")
+     *         )
+     * ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="Item not found",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="error", type="string"),
+     *             @OA\Property(property="message", type="string", example="Item not found"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="errors", type="object"),
+     *             @OA\Property(property="message", type="string", example="Validation error"),
+     *         )
+     *     )
+     *  )
      */
     public function update(Request $request, $id)
     {
-        $product = Item::findOrFail($id);
-        $product->update($request->all());
-        return $product;
+        try{
+            $item = Item::findOrFail($id);
+
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'required|string',
+                'notes' => 'required|string',
+                'scaling' => 'required|string|max:1',
+                'physical_damage' => 'required|integer|min:0',
+                'magic_damage' => 'required|integer|min:0',
+                'fire_damage' => 'required|integer|min:0',
+                'lightning_damage' => 'required|integer|min:0',
+                'holy_damage' => 'required|integer|min:0',
+                'critical_chance' => 'required|integer|min:0',
+                'level_required' => 'required|integer|min:1',
+                'physical_defense' => 'required|integer|min:0|max:100',
+                'magic_defense' => 'required|integer|min:0|max:100',
+                'fire_defense' => 'required|integer|min:0|max:100',
+                'lightning_defense' => 'required|integer|min:0|max:100',
+                'holy_defense' => 'required|integer|min:0|max:100',
+                'boost' => 'required|integer|min:0|max:100',
+            ]);
+
+            $item->update($request->all());
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'item has been updated successfully',
+                'data' => $item
+            ], 200);
+        } catch(ModelNotFoundException $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Item not found',
+                'error' => $e->getMessage()
+            ], 404);
+        } catch(ValidationException $e){
+            return response()->json([
+               'status' => 'error',
+               'error' => $e->errors(),
+               'message' => 'Validation error'
+            ], 422);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error on update item',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**
