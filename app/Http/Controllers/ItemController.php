@@ -7,44 +7,32 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Mockery\Exception;
-use OpenApi\Annotations as OA;
-
-/**
- * @OA\Info(
- *     title="API de Items",
- *     version="1.0.0",
- *     description="API de gerenciamento de items do Elden Ring NightReign"
- * )
- */
 
 class ItemController extends Controller
 {
 
     /**
-     * @OA\Get(
-     *     path="/api/items",
-     *     tags={"Items"},
-     *     summary="Listar todos os items",
-     *     description="Retorna todos os items disponiveis",
-     *     @OA\Response(
-     *         response=200,
-     *         description="Lista de items recuperada com sucesso",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="success"),
-     *             @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/Item")),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=500,
-     *         description="Erro interno no servidor",
-     *     @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="error", type="string"),
-     *             @OA\Property(property="message", type="string", example="Error on get items"),
-     *         )
-     *     )
-     * )
+     * Listar todos os items
+     *
+     * @group Items
+     * @response 200 scenario="Sucesso" [
+     *   {
+     *       "id": 1,
+     *       "name": "Item 1",
+     *       "description": "Descrição do item 1",
+     *       "created_at": "2023-10-01T12:34:56",
+     *       "updated_at": "2023-10-01T12:34:56"
+     *   },
+     *   {
+     *       "id": 2,
+     *       "name": "Item 2",
+     *       "description": "Descrição do item 2",
+     *       "created_at": "2023-10-01T12:34:56",
+     *       "updated_at": "2023-10-01T12:34:56"
+     *   }
+     * ]
      */
+
     public function index()
     {
         try{
@@ -69,43 +57,70 @@ class ItemController extends Controller
     }
 
     /**
-     * @OA\Post(
-     *     path="/api/item/add",
-     *     tags={"Items"},
-     *     summary="Criar novo item",
-     *     description="Cria um novo item caso esteja autenticado"
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(ref="#/components/schemas/Item")
-     *     ),
-     *     @OA\Response(
-     *         response=201,
-     *         description="Item criado com sucesso",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="success"),
-     *             @OA\Property(property="message", type="string", example="Item has been created successfully"),
-     *             @OA\Property(property="data", ref="#/components/schemas/Item"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Validation Error",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="errors", type="object"),
-     *             @OA\Property(property="message", type="string", example="Validation error"),
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=409,
-     *         description="Conflict",
-     *         @OA\JsonContent(
-     *             @OA\Property(property="status", type="string", example="error"),
-     *             @OA\Property(property="error", type="string"),
-     *             @OA\Property(property="message", type="string", example="Item already exists"),
-     *         )
-     *     )
-     * )
+     * Create new item
+     *
+     * @group Items
+     * @authenticated
+     *
+     * @bodyParam name string required The name of the item. Example: Sword of Truth
+     * @bodyParam description string required The item description. Example: A powerful magical sword
+     * @bodyParam notes string required Additional notes. Example: Found in ancient ruins
+     * @bodyParam scaling string required The scaling grade (S,A,B,C,D,E). Example: A
+     * @bodyParam physical_damage integer required Physical damage (0-100). Example: 75
+     * @bodyParam magic_damage integer required Magic damage (0-100). Example: 50
+     * @bodyParam fire_damage integer required Fire damage (0-100). Example: 25
+     * @bodyParam lightning_damage integer required Lightning damage (0-100). Example: 25
+     * @bodyParam holy_damage integer required Holy damage (0-100). Example: 25
+     * @bodyParam critical_chance integer required Critical hit chance (0-100). Example: 15
+     * @bodyParam level_required integer required Minimum level required (1+). Example: 30
+     * @bodyParam physical_defense integer required Physical defense (0-100). Example: 50
+     * @bodyParam magic_defense integer required Magic defense (0-100). Example: 40
+     * @bodyParam fire_defense integer required Fire defense (0-100). Example: 30
+     * @bodyParam lightning_defense integer required Lightning defense (0-100). Example: 30
+     * @bodyParam holy_defense integer required Holy defense (0-100). Example: 30
+     * @bodyParam boost integer required Stat boost value (0-100). Example: 20
+     *
+     * @response 201 scenario="Success" {
+     *     "status": "success",
+     *     "message": "Item has been created successfully",
+     *     "data": {
+     *         "name": "Sword of Truth",
+     *         "description": "A powerful magical sword",
+     *         "notes": "Found in ancient ruins",
+     *         "scaling": "A",
+     *         "physical_damage": 75,
+     *         "magic_damage": 50,
+     *         "fire_damage": 25,
+     *         "lightning_damage": 25,
+     *         "holy_damage": 25,
+     *         "critical_chance": 15,
+     *         "level_required": 30,
+     *         "physical_defense": 50,
+     *         "magic_defense": 40,
+     *         "fire_defense": 30,
+     *         "lightning_defense": 30,
+     *         "holy_defense": 30,
+     *         "boost": 20,
+     *         "updated_at": "2024-01-20T15:33:12.000000Z",
+     *         "created_at": "2024-01-20T15:33:12.000000Z",
+     *         "id": 1
+     *     }
+     * }
+     *
+     * @response 422 scenario="Validation Error" {
+     *     "status": "error",
+     *     "errors": {
+     *         "name": ["The name field is required"],
+     *         "description": ["The description field is required"]
+     *     },
+     *     "message": "Validation error"
+     * }
+     *
+     * @response 409 scenario="Conflict" {
+     *     "status": "error",
+     *     "message": "Item already exists",
+     *     "error": "duplicate entry for key `name`"
+     * }
      */
     public function store(Request $request)
     {
