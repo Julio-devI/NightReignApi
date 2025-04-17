@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ItemController;
+use App\Http\Controllers\WeaponCategoryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -12,9 +13,15 @@ use Illuminate\Support\Facades\Route;
 
 //Public routes
 
-Route::get('/items', [ItemController::class, 'index']);
-Route::get('/items/search/{name}', [ItemController::class, 'search']);
-Route::get('/items/{id}', [ItemController::class, 'show']);
+Route::prefix('api')->group(function () {
+    Route::get('/items', [ItemController::class, 'index']);
+    Route::get('/items/search/{name}', [ItemController::class, 'search']);
+    Route::get('/items/{id}', [ItemController::class, 'show']);
+
+    Route::get('/weapon-categories', [WeaponCategoryController::class, 'index']);
+    Route::get('/weapon-categories/search/{name}', [WeaponCategoryController::class, 'search']);
+});
+
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 
