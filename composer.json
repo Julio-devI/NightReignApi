@@ -13,6 +13,7 @@
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
+        "knuckleswtf/scribe": "^5.2",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.6.7",
         "nunomaduro/collision": "^8.0",
