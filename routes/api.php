@@ -20,8 +20,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 //Protected Routes
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/items', [ProductController::class, 'store']);
-    Route::put('/items/{id}', [ProductController::class, 'update']);
-    Route::delete('/items/{id}', [ProductController::class, 'destroy']);
+    Route::post('/item/add', [ItemController::class, 'store']);
+    Route::put('/items/{id}', [ItemController::class, 'update']);
+    Route::delete('/items/{id}', [ItemController::class, 'destroy']);
     Route::post('/logout', [AuthController::class, 'logout']);
 });

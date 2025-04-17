@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Item;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use Mockery\Exception;
 use OpenApi\Annotations as OA;
 
@@ -61,31 +62,102 @@ class ItemController extends Controller
         }
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @OA\Post(
+     *     path="/api/item/add",
+     *     tags={"Items"},
+     *     summary="Criar novo item",
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(ref="#/components/schemas/Item")
+     *     ),
+     *     @OA\Response(
+     *         response=201,
+     *         description="Item criado com sucesso",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="success"),
+     *             @OA\Property(property="message", type="string", example="Item has been created successfully"),
+     *             @OA\Property(property="data", ref="#/components/schemas/Item"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Validation Error",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="errors", type="object"),
+     *             @OA\Property(property="message", type="string", example="Validation error"),
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=409,
+     *         description="Conflict",
+     *         @OA\JsonContent(
+     *             @OA\Property(property="status", type="string", example="error"),
+     *             @OA\Property(property="error", type="string"),
+     *             @OA\Property(property="message", type="string", example="Item already exists"),
+     *         )
+     *     )
+     * )
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'slug' => 'required',
-            'price' => 'required'
-        ]);
+        try{
+            $request->validate([
+                'name' => 'required|string|max:255',
+                'description' => 'required|string',
+                'notes' => 'required|string',
+                'scaling' => 'required|string|max:1',
+                'physical_damage' => 'required|integer|min:0',
+                'magic_damage' => 'required|integer|min:0',
+                'fire_damage' => 'required|integer|min:0',
+                'lightning_damage' => 'required|integer|min:0',
+                'holy_damage' => 'required|integer|min:0',
+                'critical_chance' => 'required|integer|min:0',
+                'level_required' => 'required|integer|min:1',
+                'physical_defense' => 'required|integer|min:0|max:100',
+                'magic_defense' => 'required|integer|min:0|max:100',
+                'fire_defense' => 'required|integer|min:0|max:100',
+                'lightning_defense' => 'required|integer|min:0|max:100',
+                'holy_defense' => 'required|integer|min:0|max:100',
+                'boost' => 'required|integer|min:0|max:100',
+            ]);
 
-        return Item::create($request->all());
+            if (Item::where('name', $request['name'])->exists()){
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Item already exists',
+                    'error' => 'duplicate entry for key `name`',
+                ], 409);
+            }
+
+            $item = Item::create($request->all());
+
+            return response()->json([
+               'status' => 'success',
+               'message' => 'Item has been created successfully',
+               'data' => $item,
+            ], 201);
+
+        } catch (ValidationException $e){
+            return response()->json([
+               'status' => 'error',
+               'error' => $e->errors(),
+               'message' => 'Validation error'
+            ], 422);
+        }
+        catch(Exception $e){
+            return response()->json([
+                'status' => 'error',
+                'error' => $e->getMessage(),
+                'message' => 'Error on create item'
+            ], 500);
+        }
     }
 
     /**
