@@ -8,14 +8,11 @@ use function Knuckles\Scribe\Config\{removeStrategies, configureStrategy};
 // Only the most common configs are shown. See the https://scribe.knuckles.wtf/laravel/reference/config for all.
 
 return [
-    'view' => 'scribe-template.layout',
     // The HTML <title> for the generated documentation.
     'title' => config('app.name').' API Documentation',
 
     // A short description of your API. Will be included in the docs webpage, Postman collection and OpenAPI spec.
-    'description' => 'API de gerenciamento de items do Elden Ring NightReign',
-
-    'version' => '1.0.0',
+    'description' => '',
 
     // The base URL displayed in the docs.
     // If you're using `laravel` type, you can set this to a dynamic string, like '{{ config("app.tenant_url") }}' to get a dynamic base URL.
