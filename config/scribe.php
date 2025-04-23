@@ -8,6 +8,7 @@ use function Knuckles\Scribe\Config\{removeStrategies, configureStrategy};
 // Only the most common configs are shown. See the https://scribe.knuckles.wtf/laravel/reference/config for all.
 
 return [
+    'view' => 'scribe-template.layout',
     // The HTML <title> for the generated documentation.
     'title' => config('app.name').' API Documentation',
 

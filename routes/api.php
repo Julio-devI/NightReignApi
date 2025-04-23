@@ -34,5 +34,6 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/weapon-category/add', [WeaponCategoryController::class, 'store']);
     Route::put('/weapon-category/update/{id}', [WeaponCategoryController::class, 'update']);
     Route::delete('/weapon-category/delete/{id}', [WeaponCategoryController::class, 'destroy']);
+
     Route::post('/logout', [AuthController::class, 'logout']);
 });

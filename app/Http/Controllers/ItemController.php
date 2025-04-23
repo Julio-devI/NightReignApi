@@ -194,11 +194,34 @@ class ItemController extends Controller
     }
 
     /**
-     * Search for a name
-     *
-     * @param  string  $name
-     * @return \Illuminate\Http\Response
-     */
+         * Buscar itens pelo nome
+         *
+         * @group Items
+         *
+         * @urlParam name string required O nome ou parte do nome do item a ser buscado. Example: Sword
+         *
+         * @response 200 scenario="Sucesso" [
+         *   {
+         *       "id": 1,
+         *       "name": "Sword of Truth",
+         *       "description": "A powerful magical sword",
+         *       "created_at": "2023-10-01T12:34:56",
+         *       "updated_at": "2023-10-01T12:34:56"
+         *   },
+         *   {
+         *       "id": 2,
+         *       "name": "Sword of Destiny",
+         *       "description": "A legendary sword with mystical powers",
+         *       "created_at": "2023-10-01T12:34:56",
+         *       "updated_at": "2023-10-01T12:34:56"
+         *   }
+         * ]
+         *
+         * @response 404 scenario="Nenhum item encontrado" {
+         *     "status": "error",
+         *     "message": "No items found"
+         * }
+         */
     public function search($name)
     {
         return Item::where('name', 'like', '%' . $name . '%')->get();
