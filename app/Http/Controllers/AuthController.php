@@ -30,7 +30,10 @@ class AuthController extends Controller
             'token' => $token
         ];
 
-        return response($response, 201);
+        return response()->json([
+            'message' => 'User registered successfully',
+            'data' => $response
+        ], 200);
     }
 
     public function login(Request $request)
@@ -45,7 +48,7 @@ class AuthController extends Controller
         //Check password
         if (!$user || !Hash::check($fields['password'], $user->password)) {
             return response([
-                'message' => 'Bad creds'
+                'message' => 'Bad credentials'
             ], 401);
         }
 
